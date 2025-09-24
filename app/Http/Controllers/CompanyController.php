@@ -33,24 +33,7 @@ class CompanyController extends Controller
     }
 
     // Update a company
-    // public function update(Request $request, $id)
-    // {
-    //     $company = Company::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
-
-    //     $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'address' => 'nullable|string',
-    //         'industry' => 'nullable|string',
-    //     ]);
-
-    //     $company->update($request->all());
-
-    //     return response()->json([
-    //         'status' => true,
-    //         'message' => 'Company updated successfully',
-    //         'company' => $company
-    //     ]);
-    // }
+  
 
     public function update(Request $request, $id)
 {
@@ -88,17 +71,7 @@ class CompanyController extends Controller
 
 
     // Delete a company
-    // public function destroy($id)
-    // {
-    //     $company = Company::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
-    //     $company->delete();
-
-    //     return response()->json([
-    //         'status' => true,
-    //         'message' => 'Company deleted successfully'
-    //     ]);
-    // }
-
+  
  public function destroy($id)
 {
     $company = Company::findOrFail($id);

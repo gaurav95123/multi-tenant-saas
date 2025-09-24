@@ -14,7 +14,7 @@ class ActiveCompanyController extends Controller
         ]);
 
         $user = auth()->user();
-// dd($user->id);
+
         // Check ownership
         $company = $user->companies()->find($request->company_id);
         if (!$company) {
