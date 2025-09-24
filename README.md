@@ -64,3 +64,169 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+===================================================================================================================================================================================================================
+
+
+Multi-Tenant SaaS Backend (Laravel)
+
+A minimal backend in Laravel where a registered user can create, manage, and switch between multiple companies.
+All subsequent data and actions are scoped to the currently active company.
+
+🚀 Setup Instructions
+
+1. Clone repo
+
+git clone https://github.com/gaurav95123/multi-tenant-saas.git
+cd multi-tenant-saas
+
+2. Install dependencies
+composer install
+composer require laravel/breeze --dev
+php artisan breeze:install api
+npm install && npm run dev
+
+4. Environment setup
+cp  .env
+php artisan key:generate
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=multi_tenant_saas
+DB_USERNAME=root
+DB_PASSWORD=
+
+
+4. Run migrations
+
+php artisan migrate
+
+5.Serve the app
+php artisan serve
+
+🔐 Authentication Endpoints
+
+POST /api/register → Register new user
+
+POST /api/login → Login & get token
+
+POST /api/logout → Logout (invalidate token)
+
+🏢 Companies Endpoints
+
+1. List Companies
+
+
+GET /api/companies
+
+Response:
+[
+  { "id": 1, "name": "TechCorp Pvt Ltd", "address": "123 Street", "industry": "Software" }
+]
+
+
+2. Create Company
+
+POST /api/companies
+
+Body:
+
+{
+  "name": "TechCorp Pvt Ltd",
+  "address": "123 Street",
+  "industry": "Software"
+}
+
+Response:
+{
+  "name": "TechCorp Pvt Ltd",
+  "address": "123 Street",
+  "industry": "Software"
+}
+
+
+3. Update Company
+
+PUT /api/companies/{id}
+
+Body:
+{
+  "name": "TechCorp Solutions",
+  "address": "456 IT Park",
+  "industry": "IT Services"
+}
+
+Response:
+{ "id": 2, "name": "TechCorp Solutions", "address": "456 IT Park", "industry": "IT Services" }
+
+4. Delete Company
+
+DELETE /api/companies/{id}
+
+Response:
+
+{ "message": "Company deleted successfully" }
+
+
+
+
+
+🔄 Active Company Endpoints
+
+Set Active Company
+
+POST /api/active-company
+
+Body:
+
+{ "company_id": 2 }
+
+Response:
+
+{
+  "message": "Active company set successfully",
+  "active_company": { "id": 2, "name": "TechCorp Pvt Ltd" }
+}
+
+
+Get Current Active Company
+
+GET /api/active-company
+
+Response:
+
+{ "id": 2, "name": "TechCorp Pvt Ltd", "address": "123 Street", "industry": "Software" }
+
+
+Multi-Tenant Logic 
+User → Companies: Each user can create multiple companies.
+
+Active company: Tracked via user_active_companies table (or active_company_id in users table).
+
+Data isolation:
+
+A user can only see/manage their own companies.
+
+All future modules (invoices, projects, etc.) will include a company_id field.
+
+Queries are always filtered by the user’s current active company.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
